@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+    <name>RimSpector</name>
+    <author>Alrikozord</author>
+    <url>www.anything.com</url>
+    <packageId>Alrikozord.RimSpector</packageId>
+    <supportedVersions>
+        <li>1.3</li>
+    </supportedVersions>
+
+    <description>Sample description.
+        
+Which spans multiple lines. Is also includes whitespace, so unless you want ugly indentation on the workshop, you need to have it un-beautified like this.
+    </description>
+
+    <!-- <modDependencies>
+    </modDependencies> -->
+    <!-- <modDependenciesByVersion>
+    </modDependenciesByVersion> -->
+
+    <!-- <loadAfter>
+    </loadAfter> -->
+
+    <!-- <incompatibleWith>
+    </incompatibleWith> -->
+</ModMetaData>
