@@ -1,65 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using RimSpectorMod;
+using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Net.Http;
-using System.Runtime;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using RimWorld;
+using System.Threading;
+using System.Windows.Forms;
 using UnityEngine;
 using Verse;
-using System.IO;
-using Verse.AI;
-using Contracts;
-using RimSpectorMod;
-using RimSpectorMod.Mapper;
-using System.Runtime.Serialization.Json;
-using System.Globalization;
-using System.Threading;
 
 namespace RimMod
 {
     public class RimSpectorMod : Mod
     {
         private BackgroundWorker _worker;
-        private DataContractJsonSerializer _serializer;
+        private DebugLogger _debugLogger;
+        private DebugFileDumper _debugFileDumper;
+        private EndpointBuilder _endpointBuilder;
+        private PayloadBuilder _payloadBuilder;
+        private WebHelper _webHelper;
 
         public Settings Settings { get; }
-
 
         public RimSpectorMod(ModContentPack content) : base(content)
         {
             Log.Message("RimSpector initialized");
 
             Settings = GetSettings<Settings>();
-            Log.Message($"RimSpector: loaded Settings {Settings}");
-            Log.Message($"RimSpector: _id {Settings._id}");
-            Log.Message($"RimSpector: _baseUrl {Settings._baseUrl}");
-            Log.Message($"RimSpector: _updateInterval {Settings._updateInterval}s");
 
-            _serializer = new DataContractJsonSerializer(typeof(Payload), new DataContractJsonSerializerSettings
-            {
-                DateTimeFormat = new System.Runtime.Serialization.DateTimeFormat("yyyy-MM-ddTHH:mm:ss"),
-                IgnoreExtensionDataObject = true,
-                KnownTypes = new[]
-                {
-                    typeof(Payload),
-                    typeof(IdeoPayload),
-                    typeof(RolePayload),
-                    typeof(PreceptPayload),
-                    typeof(PawnPayload),
-                    typeof(SkillPayload),
-                    typeof(Contracts.Passion),
-                    typeof(ThingPayload),
-                    typeof(AgePayload),
-                    typeof(TraitPayload),
-                    typeof(BackstoryPayload),
-                    typeof(HealthPayload),
-                    typeof(PsycastPayload),
-                }
-            });
+            var serializerProvider = new SerializerProvider();
+            _debugLogger = new DebugLogger(Settings);
+
+            _debugFileDumper = new DebugFileDumper(Settings, serializerProvider);
+            _endpointBuilder = new EndpointBuilder(Settings);
+            _payloadBuilder = new PayloadBuilder(Settings);
+            _webHelper = new WebHelper(Settings, _endpointBuilder, _debugLogger, serializerProvider);
+
+            Log.Message($"RimSpector: your endpoint {_endpointBuilder.ConfiguredEndpoint}");
+
+            _debugLogger.Log("RimSpector: running in debug mode.");
+            _debugLogger.Log($"RimSpector: debug dump will be written to {Settings._debugDumpFolder}");
 
             _worker = new BackgroundWorker();
             _worker.DoWork += _worker_DoWork;
@@ -70,7 +47,7 @@ namespace RimMod
 
         private void _worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            Log.Message($"RimSpector: Starting loop with interval {Settings._updateInterval}");
+            _debugLogger.Log($"RimSpector: Starting loop with interval {Settings._updateInterval}");
 
             while (true)
             {
@@ -78,86 +55,20 @@ namespace RimMod
                 {
                     Thread.Sleep(TimeSpan.FromSeconds(Settings._updateInterval));
 
-                    var payload = GetFilledPayload();
+                    var payload = _payloadBuilder.Build();
 
-                    using (var stream = new MemoryStream())
-                    {
-                        _serializer.WriteObject(stream, payload);
-
-                        var json = Encoding.Default.GetString(stream.ToArray());
-
-                        File.WriteAllText("C:/temp/payload.json", json);
-                        Log.Message($"RimSpector: written payload");
-                    }
+                    _webHelper.Post(payload);
+                    _debugFileDumper.DumpIfDebug(payload);
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex?.InnerException?.ToString());
                     Log.Error($"Error during {nameof(_worker_DoWork)}");
+                    Log.Error(ex.Message);
+                    Log.Error(ex.StackTrace);
+                    Log.Error(ex.InnerException.Message);
                 }
             }
         }
-
-        private Payload GetFilledPayload()
-        {
-            try
-            {
-                var pawns = PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_Colonists;
-
-                var ideos = pawns?
-                    .GroupBy(p => p.Ideo)
-                    .OrderByDescending(p => p.Count())
-                    .Select(p => p.Key)
-                    .ToList();
-
-                var payload = new Payload();
-                payload.Timestamp = DateTime.UtcNow;
-                payload.Id = Guid.Parse(Settings?._id);
-
-                if (pawns?.Any() ?? false)
-                {
-                    try
-                    {
-                        payload.Pawns = PawnMapper.Map(pawns).ToList();
-                        payload.Ideos = IdeologyMapper.Map(ideos).ToList();
-                        //payload.History = GetHistoryPayload();
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error($"Error during {nameof(GetFilledPayload)}");
-                        Log.Error(ex.Message);
-
-                        throw;
-                    }
-                }
-                return payload;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex?.ToString());
-
-                throw;
-            }
-
-        }
-
-        //private IEnumerable<IdeoPayload> GetIdeologyPayload(IEnumerable<Pawn> pawns)
-        //{
-        //    var relevantIdeos = pawns?
-        //                               .GroupBy(p => p.Ideo)
-        //                               .OrderByDescending(p => p.Count())
-        //                               .Select(p => p.Key);
-        //    return _mapper.Map<IEnumerable<IdeoPayload>>(relevantIdeos);
-        //}
-        //private IEnumerable<HistoryPayload> GetHistoryPayload()
-        //{
-        //    throw new NotImplementedException();
-
-        //    var historyRecorder = new HistoryAutoRecorderGroup();
-        //    historyRecorder.ExposeData();
-
-        //    return _mapper.Map<IEnumerable<HistoryPayload>>(historyRecorder?.recorders);
-        //}
 
         /// <summary>
         /// Override SettingsCategory to show up in the list of settings.
@@ -165,11 +76,6 @@ namespace RimMod
         /// </summary>
         /// <returns>The (translated) mod name.</returns>
         public override string SettingsCategory() => "RimSpector";
-
-        public override void WriteSettings()
-        {
-            base.WriteSettings();
-        }
 
         /// <summary>
         /// The (optional) GUI part to set your settings.
@@ -179,10 +85,11 @@ namespace RimMod
         {
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.Begin(inRect);
-            listingStandard.Label($"Your export url is {Settings._baseUrl}/{Settings._id}");
-            listingStandard.ButtonText("Copy to clipboard");
-            string buffer = string.Empty;
-            listingStandard.TextFieldNumericLabeled<int>("Update interval (in sec)", ref Settings._updateInterval, ref buffer, 30, int.MaxValue);
+            listingStandard.Label($"Your export url is {_endpointBuilder.ConfiguredEndpoint}");
+            if (listingStandard.ButtonText("Copy to clipboard"))
+            {
+                Clipboard.SetText(_endpointBuilder.ConfiguredEndpoint);
+            }
             listingStandard.End();
             base.DoSettingsWindowContents(inRect);
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace RimSpector.Pages
+namespace RimSpectorApi.Pages
 {
     public class HistoryModel : PageModel
     {

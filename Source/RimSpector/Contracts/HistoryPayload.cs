@@ -1,4 +1,4 @@
-﻿namespace RimSpectorApi.Contract
+﻿namespace RimSpectorApi.Contracts
 {
     public class HistoryPayload
     {

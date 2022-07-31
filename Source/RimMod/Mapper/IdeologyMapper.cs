@@ -3,11 +3,6 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using Verse;
 
 namespace RimSpectorMod.Mapper
 {
@@ -45,10 +40,10 @@ namespace RimSpectorMod.Mapper
             payload.Rituals = MapRitualPrecepts();
             payload.Relics = MapRelicsPrecepts();
             payload.Weapons = MapWeaponPrecepts();
-            payload.Animals = MapThingPrecepts<Precept_Animal>();
-            payload.Apparel = MapThingPrecepts<Precept_Apparel>();
+            payload.Animals = MapAnimalsPrecepts();
+            payload.Apparel = MapApparelPrecepts();
             //IdeoUIUtility
-            
+
             //TODO PreceptPayload aufbohren
 
             return payload;
@@ -66,24 +61,23 @@ namespace RimSpectorMod.Mapper
             .Select(Map)
             .ToList();
 
-        private IEnumerable<ThingPreceptPayload> MapRelicsPrecepts()
+        private IEnumerable<RelicPreceptPayload> MapRelicsPrecepts()
         => _ideo.GetAllPreceptsOfType<Precept_Relic>()
            .Where(p => p.def?.visible ?? false)
-           .Select(p => new ThingPreceptPayload
-           {
-               Name = p?.UIInfoSecondLine,
-               Item = p?.ThingDef?.LabelCap,
-               Impact = p?.def?.impact.ToString(),
-           })
+           .Select(Map)
            .ToList();
 
+        private IEnumerable<AnimalPreceptPayload> MapAnimalsPrecepts()
+        => _ideo.GetAllPreceptsOfType<Precept_Animal>()
+           .Where(p => p.def?.visible ?? false)
+           .Select(Map)
+           .ToList();
 
-        private IEnumerable<ThingPreceptPayload> MapThingPrecepts<T>()
-            where T : Precept
-            => _ideo.GetAllPreceptsOfType<T>()
-               .Where(p => p.def?.visible ?? false)
-               .Select(MapThing)
-               .ToList();
+        private IEnumerable<ApparelPreceptPayload> MapApparelPrecepts()
+         => _ideo.GetAllPreceptsOfType<Precept_Apparel>()
+            .Where(p => p.def?.visible ?? false)
+            .Select(Map)
+            .ToList();
 
         internal static RolePayload Map(Precept_Role role)
             => new RolePayload
@@ -92,13 +86,6 @@ namespace RimSpectorMod.Mapper
                 Role = role?.def?.LabelCap
             };
 
-        internal static ThingPreceptPayload MapThing(Precept precept)
-            => new ThingPreceptPayload
-            {
-                Name = precept?.UIInfoSecondLine,
-                Item = precept?.UIInfoFirstLine,
-                Impact = precept?.def?.impact.ToString(),
-            };
 
         internal static PreceptPayload Map(Precept precept)
             => new PreceptPayload
@@ -117,6 +104,7 @@ namespace RimSpectorMod.Mapper
                 Name = precept?.LabelCap,
                 IsAnytime = precept?.isAnytime ?? false,
                 DateTrigger = trigger?.DateString,
+                Type = precept?.UIInfoFirstLine,
                 Impact = precept?.def?.impact.ToString(),
             };
         }
@@ -130,19 +118,28 @@ namespace RimSpectorMod.Mapper
                 Impact = precept?.def?.impact.ToString(),
             };
 
-        private ThingPreceptPayload Map(Precept_Relic precept)
-           => new ThingPreceptPayload
+        private RelicPreceptPayload Map(Precept_Relic precept)
+           => new RelicPreceptPayload
            {
                Name = precept?.UIInfoSecondLine,
-               Item = precept?.LabelCap,
+               Item = precept?.ThingDef?.LabelCap,
                Impact = precept?.def?.impact.ToString(),
            };
 
-        private ThingPayload Map(Thing thing)
-            => new ThingPayload
-            {
-                Name = thing.LabelCap
-            };
+        private ApparelPreceptPayload Map(Precept_Apparel precept)
+          => new ApparelPreceptPayload
+          {
+              Name = precept?.UIInfoSecondLine,
+              Item = precept?.UIInfoFirstLine,
+              Impact = precept?.def?.impact.ToString(),
+          };
+
+        private AnimalPreceptPayload Map(Precept_Animal precept)
+         => new AnimalPreceptPayload
+         {
+             Name = precept?.UIInfoFirstLine,
+             Impact = precept?.def?.impact.ToString(),
+         };
     }
 
 
