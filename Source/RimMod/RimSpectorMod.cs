@@ -88,8 +88,10 @@ namespace RimMod
             listingStandard.Label($"Your export url is {_endpointBuilder.ConfiguredEndpoint}");
             if (listingStandard.ButtonText("Copy to clipboard"))
             {
-                Clipboard.SetText(_endpointBuilder.ConfiguredEndpoint);
+                _debugLogger.Log("button true");
+                GUIUtility.systemCopyBuffer = _endpointBuilder.ConfiguredEndpoint;
             }
+
             listingStandard.End();
             base.DoSettingsWindowContents(inRect);
 
