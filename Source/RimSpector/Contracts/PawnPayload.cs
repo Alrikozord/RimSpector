@@ -6,6 +6,7 @@ namespace RimSpectorApi.Contracts
     [DataContract]
     public class PawnPayload
     {
+        [DataMember] public string? Id { get; set; }
         [DataMember] public string? Name { get; set; }
         [DataMember] public string? FullName { get; set; }
         [DataMember] public string? Gender { get; set; }

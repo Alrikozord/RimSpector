@@ -6,7 +6,7 @@ namespace Contracts
     [DataContract]
     public class IdeoPayload
     {
-        [DataMember(EmitDefaultValue = false)] public int Id { get; set; }
+        [DataMember] public int Id { get; set; }
         [DataMember(EmitDefaultValue = false)] public string Name { get; set; }
         [DataMember(EmitDefaultValue = false)] public bool IsFluid { get; set; }
         [DataMember(EmitDefaultValue = false)] public int CurrentReformPoints { get; internal set; }

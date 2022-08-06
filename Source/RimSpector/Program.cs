@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<Cache>();
+builder.Services.AddTransient<Service>();
 
 var app = builder.Build();
 
@@ -35,6 +36,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+       name: "pawn",
+       pattern: "{clientId}",
+       defaults: new { controller = "Pawns" });
+
+});
 
 app.UseAuthorization();
 app.MapRazorPages();

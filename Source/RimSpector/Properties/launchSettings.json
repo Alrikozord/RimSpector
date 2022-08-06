@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -10,12 +10,13 @@
   "profiles": {
     "RimSpector": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7246;http://localhost:5246",
+      "launchUrl": "https://localhost:7246/B0DDD4B2-83D9-4B4F-9A98-CC47EE68C3F0",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:7246;http://localhost:5246",
+      "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",

@@ -25,6 +25,7 @@ namespace RimSpectorMod.Mapper
         public PawnPayload Map()
         {
             var payload = new PawnPayload();
+            payload.Id = _pawn.ThingID;
             payload.Name = _pawn.Name?.ToStringShort;
             payload.FullName = _pawn.Name?.ToStringFull;
             payload.Gender = _pawn.gender.ToString();

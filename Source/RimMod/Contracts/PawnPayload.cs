@@ -6,6 +6,7 @@ namespace Contracts
     [DataContract]
     public class PawnPayload
     {
+        [DataMember] public string Id { get; internal set; }
         [DataMember(EmitDefaultValue = false)] public string Name { get; set; }
         [DataMember(EmitDefaultValue = false)] public string FullName { get; set; }
         [DataMember(EmitDefaultValue = false)] public string Gender { get; set; }
@@ -26,7 +27,6 @@ namespace Contracts
         [DataMember(EmitDefaultValue = false)] public IEnumerable<TraitPayload> Traits { get; set; }
         [DataMember(EmitDefaultValue = false)] public IEnumerable<BackstoryPayload> Backstories { get; set; }
         [DataMember(EmitDefaultValue = false)] public IEnumerable<HealthPayload> Health { get; set; }
-
     }
     [DataContract]
     public class SkillPayload
