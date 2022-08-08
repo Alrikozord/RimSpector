@@ -59,6 +59,7 @@ namespace RimSpectorMod.Mapper
 
             payload.Traits = _pawn.story?.traits?.allTraits?.Select(Map).ToList();
             payload.Backstories = _pawn.story?.AllBackstories?.Select(b => Map(b)).ToList();
+            //TODO Group missing parts. currently it will list fingers and stuff if an arm is missing
             payload.Health = _pawn.health?.hediffSet?.hediffs?.Select(Map).ToList();
 
             payload.PsylinkLevel = _pawn.GetPsylinkLevel();
@@ -66,6 +67,8 @@ namespace RimSpectorMod.Mapper
 
             return payload;
         }
+
+        //TODO get incapabilities. Firefight is not a skill so it cant be deducted from the disabled skills
 
         private SkillPayload Map(SkillRecord skill)
             => new SkillPayload
@@ -98,19 +101,35 @@ namespace RimSpectorMod.Mapper
           => new TraitPayload
           {
               Name = trait.LabelCap,
-              Desc = trait.TipString(_pawn)
+              Desc = GetCleanTraitDesc(trait)
           };
+
+        private string GetCleanTraitDesc(Trait trait)
+        {
+            var desc = trait.TipString(_pawn);
+
+            while (desc.IndexOf('<') >= 0)
+            {
+                var start = desc.IndexOf('<');
+                var end = desc.IndexOf('>');
+                var tag = desc.Substring(start, end - start + 1);
+
+                desc = desc.Replace(tag, string.Empty);
+            }
+
+            return desc;
+        }
         private BackstoryPayload Map(Backstory backstory)
         => new BackstoryPayload
         {
-            Name = backstory.title,
+            Name = backstory.TitleCapFor(_pawn.gender),
             Desc = backstory.FullDescriptionFor(_pawn)
         };
 
         private ThingPayload Map(Thing thing)
             => new ThingPayload
             {
-                Name = thing.Label
+                Name = thing.LabelCap
             };
     }
 }

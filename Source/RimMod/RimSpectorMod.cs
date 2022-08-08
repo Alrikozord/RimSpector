@@ -24,6 +24,7 @@ namespace RimMod
             Log.Message("RimSpector initialized");
 
             Settings = GetSettings<Settings>();
+            Settings.Write();
 
             var serializerProvider = new SerializerProvider();
             _debugLogger = new DebugLogger(Settings);
@@ -33,7 +34,7 @@ namespace RimMod
             _payloadBuilder = new PayloadBuilder(Settings);
             _webHelper = new WebHelper(Settings, _endpointBuilder, _debugLogger, serializerProvider);
 
-            Log.Message($"RimSpector: your endpoint {_endpointBuilder.ConfiguredEndpoint}");
+            Log.Message($"RimSpector: your endpoint {_endpointBuilder.ConfiguredApiEndpoint}");
 
             _debugLogger.Log("RimSpector: running in debug mode.");
             _debugLogger.Log($"RimSpector: debug dump will be written to {Settings._debugDumpFolder}");
@@ -51,6 +52,8 @@ namespace RimMod
 
             while (true)
             {
+                Log.Error($"looping");
+                //TODO Check resilience. There are some null reference exceptions that cause this to break
                 try
                 {
                     Thread.Sleep(TimeSpan.FromSeconds(Settings._updateInterval));
@@ -62,7 +65,7 @@ namespace RimMod
                 }
                 catch (Exception ex)
                 {
-                    Log.Error($"Error during {nameof(_worker_DoWork)}");
+                    Log.Error($"Error caught in {nameof(_worker_DoWork)}");
                     Log.Error(ex.Message);
                     Log.Error(ex.StackTrace);
                     Log.Error(ex.InnerException.Message);
@@ -85,11 +88,11 @@ namespace RimMod
         {
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.Begin(inRect);
-            listingStandard.Label($"Your export url is {_endpointBuilder.ConfiguredEndpoint}");
+            listingStandard.Label($"Your export url is {_endpointBuilder.ConfiguredSiteEndpoint}");
             if (listingStandard.ButtonText("Copy to clipboard"))
             {
                 _debugLogger.Log("button true");
-                GUIUtility.systemCopyBuffer = _endpointBuilder.ConfiguredEndpoint;
+                GUIUtility.systemCopyBuffer = _endpointBuilder.ConfiguredSiteEndpoint;
             }
 
             listingStandard.End();

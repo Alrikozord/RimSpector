@@ -12,8 +12,8 @@ namespace RimSpectorApi
             _cache = cache;
         }
 
-        public void Add(Payload payload)
-            => _cache.Add(payload);
+        public void Add(string clientKey, Payload payload)
+            => _cache.Add(clientKey, payload);
 
         public bool TryGetFullPayload(Guid id, out Payload? payload)
             => _cache.TryGet(id, out payload);
@@ -52,11 +52,9 @@ namespace RimSpectorApi
 
         public PawnPayload GetPawn(Guid id, string pawnId)
         {
-            if (_cache.TryGet(id, out var payload))
-            {
-                return payload.Pawns?.FirstOrDefault(p => p.Id == pawnId) 
-                    ?? throw new KeyNotFoundException();              
-            }
+            if (_cache.TryGet(id, out var payload))            
+                return payload.Pawns?.FirstOrDefault(p => p.Id == pawnId)
+                    ?? throw new KeyNotFoundException();            
 
             throw new KeyNotFoundException();
         }
@@ -83,6 +81,15 @@ namespace RimSpectorApi
 
             ideo = null;
             return false;
+        }
+
+        public IdeoPayload GetIdeo(Guid id, int ideoId)
+        {
+            if (_cache.TryGet(id, out var payload))
+                return payload.Ideos?.FirstOrDefault(p => p.Id == ideoId)
+                    ?? throw new KeyNotFoundException();
+
+            throw new KeyNotFoundException();
         }
     }
 }

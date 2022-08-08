@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RimSpectorApi.Attributes;
 using RimSpectorApi.Contracts;
 
 namespace RimSpectorApi.Controllers
@@ -14,13 +15,16 @@ namespace RimSpectorApi.Controllers
             _service = service;
         }
 
+        [ClientKey("id")]
         [HttpPost("{id}")]
         public IActionResult Post(Guid id, [FromBody] Payload payload)
         {
             if (id != payload.Id)
                 return BadRequest("Id missmatch");
 
-            _service.Add(payload);
+            var clientKey = Request.Headers[ClientKeyFilter.ClientKeyName].Single();
+
+            _service.Add(clientKey, payload);
             return Ok();
         }
 
@@ -45,8 +49,8 @@ namespace RimSpectorApi.Controllers
         [HttpGet("{id}/Pawns/{pawnId}")]
         public IActionResult GetPawn(Guid id, string pawnId)
         {
-            if (_service.TryGetPawn(id, pawnId, out var pawn))            
-                return Ok(pawn);            
+            if (_service.TryGetPawn(id, pawnId, out var pawn))
+                return Ok(pawn);
 
             return NotFound();
         }

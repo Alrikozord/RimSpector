@@ -48,10 +48,21 @@ namespace RimSpectorApi.Pages
 
                 return $"background: linear-gradient(90deg, #2d3034 {skillPercent}%, #15191d 0)";
             }
-            return string.Empty;
+            return string.Empty;       
         }
 
-        public string IdeoUrl => $"{ClientId}/Ideos/{SelectedPawn.Ideo}";
+        public string SkillValueText(SkillPayload skill)
+        {
+            if (skill.Level.HasValue)            
+                return skill.Level?.ToString() ?? "0";
+            
+            else if(skill.Disabled ?? false)            
+                return "-";
+            
+            return "0";
+        }
+
+        public string IdeoUrl => $"/{ClientId}/Ideos/{SelectedPawn.Ideo}";
 
         public PawnsModel(ILogger<PawnsModel> logger, Service service)
         {
@@ -66,12 +77,16 @@ namespace RimSpectorApi.Pages
             {
                 if (_service.TryGetPawns(clientId, out var pawns))
                     SelectedPawnId = pawns.FirstOrDefault()?.Id ?? string.Empty;
-
-                SelectedPawnId = string.Empty;
+                else
+                    SelectedPawnId = string.Empty;
             }
             else
             {
                 SelectedPawnId = pawnId!;
+            }
+
+            if (!string.IsNullOrWhiteSpace( SelectedPawnId))
+            {
                 SelectedPawn = _service.GetPawn(ClientId, SelectedPawnId);
             }
         }

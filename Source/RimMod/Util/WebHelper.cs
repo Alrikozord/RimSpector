@@ -29,12 +29,12 @@ namespace RimSpectorMod
         public long Post(Payload payload)
         {
             using (var stream = new MemoryStream())
-            using (var request = new UnityWebRequest(_endpointBuilder.ConfiguredEndpoint, "POST"))
+            using (var request = new UnityWebRequest(_endpointBuilder.ConfiguredApiEndpoint, "POST"))
             {
                 _serializer.WriteObject(stream, payload);
                                 
                 request.SetRequestHeader("Content-Type", "application/json");
-                request.SetRequestHeader("ClientKey", _settings._privateKey);
+                request.SetRequestHeader("CLIENT-KEY", _settings._privateKey);
                 request.downloadHandler = new DownloadHandlerBuffer();
                 request.uploadHandler = new UploadHandlerRaw(stream.ToArray());
                 request.timeout = 5; // seconds

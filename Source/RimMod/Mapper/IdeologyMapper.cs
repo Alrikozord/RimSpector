@@ -44,8 +44,6 @@ namespace RimSpectorMod.Mapper
             payload.Apparel = MapApparelPrecepts();
             //IdeoUIUtility
 
-            //TODO PreceptPayload aufbohren
-
             return payload;
         }
 

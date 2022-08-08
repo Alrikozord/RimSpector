@@ -6,7 +6,8 @@ namespace RimSpectorMod
     {
         private readonly Settings _settings;
 
-        public string ConfiguredEndpoint => $"{_settings._baseUrl}/{_settings._id}";
+        public string ConfiguredApiEndpoint => $"{_settings._baseUrl}{_settings._apiPath}/{_settings._id}";
+        public string ConfiguredSiteEndpoint => $"{_settings._baseUrl}/{_settings._id}";
 
         public EndpointBuilder(Settings settings)
         {
