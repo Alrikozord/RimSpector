@@ -19,6 +19,7 @@ namespace Contracts
         [DataMember(EmitDefaultValue = false)] public IEnumerable<ThingPayload> Equipment { get; set; }
         [DataMember(EmitDefaultValue = false)] public IEnumerable<ThingPayload> Apparel { get; set; }
         [DataMember(EmitDefaultValue = false)] public IEnumerable<SkillPayload> Skills { get; set; }
+        [DataMember(EmitDefaultValue = false)] public IEnumerable<IncapabilityPayload> Incapabilities { get; set; }
 
 
         [DataMember(EmitDefaultValue = false)] public int PsylinkLevel { get; set; }
@@ -38,6 +39,11 @@ namespace Contracts
         [DataMember(EmitDefaultValue = false)] public int Level { get; set; }
         [DataMember(EmitDefaultValue = false)] public bool Disabled { get; set; }
 
+    }
+    [DataContract]
+    public class IncapabilityPayload
+    {
+        [DataMember(EmitDefaultValue = false)] public string Name { get; set; }
     }
     [DataContract]
     public enum Passion : byte

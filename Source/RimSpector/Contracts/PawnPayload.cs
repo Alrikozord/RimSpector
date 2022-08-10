@@ -16,9 +16,10 @@ namespace RimSpectorApi.Contracts
         [DataMember] public int? Ideo { get; set; }
 
 
-        [DataMember] public IEnumerable<ThingPayload> Equipment { get; set; }
-        [DataMember] public IEnumerable<ThingPayload> Apparel { get; set; }
-        [DataMember] public IEnumerable<SkillPayload> Skills { get; set; }
+        [DataMember] public IEnumerable<ThingPayload> Equipment { get; set; } = Enumerable.Empty<ThingPayload>();
+        [DataMember] public IEnumerable<ThingPayload> Apparel { get; set; } = Enumerable.Empty<ThingPayload>();
+        [DataMember] public IEnumerable<SkillPayload> Skills { get; set; } = Enumerable.Empty<SkillPayload>();
+        [DataMember] public IEnumerable<IncapabilityPayload> Incapabilities { get; set; } = Enumerable.Empty<IncapabilityPayload>();
 
 
         [DataMember] public int PsylinkLevel { get; set; } = 0;
@@ -39,6 +40,11 @@ namespace RimSpectorApi.Contracts
         [DataMember] public int? Level { get; set; }
         [DataMember] public bool? Disabled { get; set; }
 
+    }
+    [DataContract]
+    public class IncapabilityPayload
+    {
+        [DataMember] public string? Name { get; set; }
     }
     [DataContract]
     public enum Passion : byte

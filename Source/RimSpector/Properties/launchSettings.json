@@ -11,7 +11,7 @@
     "RimSpector": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:7246/B0DDD4B2-83D9-4B4F-9A98-CC47EE68C3F0",
+      "launchUrl": "https://localhost:7246/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

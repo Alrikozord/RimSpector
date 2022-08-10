@@ -33,7 +33,7 @@ namespace RimSpectorApi.Attributes
             }
 
             // validate key
-            if (!_cache.CheckKey(
+            if (!_cache.IsClientKeyValidForPayload(
                     extractedClientKey.Single(),
                     Guid.Parse(context.RouteData.Values[ClientIdPathVariableName]!.ToString()!)))
             {

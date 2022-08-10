@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RimSpectorMod.Mapper
 {
@@ -57,9 +58,13 @@ namespace RimSpectorMod.Mapper
                 .Select(Map)
                 .ToList();
 
+            payload.Incapabilities = WorkTagsFrom(_pawn.CombinedDisabledWorkTags).Select(Map);
+
             payload.Traits = _pawn.story?.traits?.allTraits?.Select(Map).ToList();
+
             payload.Backstories = _pawn.story?.AllBackstories?.Select(b => Map(b)).ToList();
             //TODO Group missing parts. currently it will list fingers and stuff if an arm is missing
+
             payload.Health = _pawn.health?.hediffSet?.hediffs?.Select(Map).ToList();
 
             payload.PsylinkLevel = _pawn.GetPsylinkLevel();
@@ -69,6 +74,7 @@ namespace RimSpectorMod.Mapper
         }
 
         //TODO get incapabilities. Firefight is not a skill so it cant be deducted from the disabled skills
+        // _pawn.GetDisabledWorkTypes()
 
         private SkillPayload Map(SkillRecord skill)
             => new SkillPayload
@@ -80,6 +86,22 @@ namespace RimSpectorMod.Mapper
                 MinLevel = SkillRecord.MinLevel,
                 Passion = Map(skill.passion)
             };
+        private IncapabilityPayload Map(WorkTags workType)
+            => new IncapabilityPayload
+            {
+                Name = workType.LabelTranslated().CapitalizeFirst()
+            };
+        private static IEnumerable<WorkTags> WorkTagsFrom(WorkTags tags)
+        {
+            foreach (WorkTags allSelectedItem in tags.GetAllSelectedItems<WorkTags>())
+            {
+                if (allSelectedItem != 0)
+                {
+                    yield return allSelectedItem;
+                }
+            }
+        }
+
         private HealthPayload Map(Hediff health)
            => new HealthPayload
            {

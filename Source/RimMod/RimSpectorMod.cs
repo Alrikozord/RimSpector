@@ -52,7 +52,6 @@ namespace RimMod
 
             while (true)
             {
-                Log.Error($"looping");
                 //TODO Check resilience. There are some null reference exceptions that cause this to break
                 try
                 {
@@ -91,7 +90,6 @@ namespace RimMod
             listingStandard.Label($"Your export url is {_endpointBuilder.ConfiguredSiteEndpoint}");
             if (listingStandard.ButtonText("Copy to clipboard"))
             {
-                _debugLogger.Log("button true");
                 GUIUtility.systemCopyBuffer = _endpointBuilder.ConfiguredSiteEndpoint;
             }
 

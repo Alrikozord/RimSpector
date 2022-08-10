@@ -45,7 +45,7 @@
                         <a>None</a>
                     }
                     <div class="incapables">
-                    @foreach (var disabledSkill in Model.DisabledSkills)
+                    @foreach (var disabledSkill in Model.SelectedPawn.Incapabilities)
                     {
                         <div>@disabledSkill.Name</div>                            
                     }
