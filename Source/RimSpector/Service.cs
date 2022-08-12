@@ -52,9 +52,9 @@ namespace RimSpectorApi
 
         public PawnPayload GetPawn(Guid id, string pawnId)
         {
-            if (_cache.TryGetPayload(id, out var payload))            
+            if (_cache.TryGetPayload(id, out var payload))
                 return payload.Pawns?.FirstOrDefault(p => p.Id == pawnId)
-                    ?? throw new KeyNotFoundException();            
+                    ?? throw new KeyNotFoundException();
 
             throw new KeyNotFoundException();
         }
@@ -91,5 +91,55 @@ namespace RimSpectorApi
 
             throw new KeyNotFoundException();
         }
+
+
+        public bool TryGetWorld(Guid id, out WorldPayload? world)
+        {
+            world = null;
+            if (_cache.TryGetPayload(id, out var payload))
+            {
+                world = payload.World;
+                return world != null;
+            }
+
+            return false;
+        }
+
+        public bool TryGetStoryteller(Guid id, out StorytellerPayload? storyteller)
+        {
+            storyteller = null;
+            if (_cache.TryGetPayload(id, out var payload))
+            {
+                storyteller = payload.Storyteller;
+                return storyteller != null;
+            }
+
+            return false;
+        }
+
+        public bool TryGetMods(Guid id, out IEnumerable<ModPayload> mods)
+        {
+            mods = Enumerable.Empty<ModPayload>();
+            if (_cache.TryGetPayload(id, out var payload))
+            {
+                mods = payload.Mods ?? Enumerable.Empty<ModPayload>();
+                return mods.Any();
+            }
+
+            return false;
+        }
+
+        public bool TryGetMaps(Guid id, out IEnumerable<MapPayload> maps)
+        {
+            maps = Enumerable.Empty<MapPayload>();
+            if (_cache.TryGetPayload(id, out var payload))
+            {
+                maps = payload.Maps ?? Enumerable.Empty<MapPayload>();
+                return maps.Any();
+            }
+
+            return false;
+        }
+
     }
 }

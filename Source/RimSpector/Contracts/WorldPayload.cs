@@ -5,12 +5,12 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts
+namespace RimSpectorApi.Contracts
 {
     [DataContract]
     public class WorldPayload
     {
-        [DataMember(EmitDefaultValue = false)] public string Seed { get; set; }
+        [DataMember(EmitDefaultValue = false)] public string? Seed { get; set; }
         [DataMember(EmitDefaultValue = false)] public float Coverage { get; set; }
         [DataMember(EmitDefaultValue = false)] public int Rainfall { get; set; }
         [DataMember(EmitDefaultValue = false)] public int Temperature { get; set; }

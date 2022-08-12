@@ -9,8 +9,8 @@ namespace Contracts
         [DataMember] public int Id { get; set; }
         [DataMember(EmitDefaultValue = false)] public string Name { get; set; }
         [DataMember(EmitDefaultValue = false)] public bool IsFluid { get; set; }
-        [DataMember(EmitDefaultValue = false)] public int CurrentReformPoints { get; internal set; }
-        [DataMember(EmitDefaultValue = false)] public int NextReform { get; internal set; }
+        [DataMember(EmitDefaultValue = false)] public int CurrentReformPoints { get; set; }
+        [DataMember(EmitDefaultValue = false)] public int NextReform { get; set; }
 
         [DataMember(EmitDefaultValue = false)] public IEnumerable<RolePayload> Roles { get; set; }
         [DataMember(EmitDefaultValue = false)] public IEnumerable<string> Memes { get; set; }

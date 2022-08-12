@@ -5,11 +5,11 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts
+namespace RimSpectorApi.Contracts
 {
     [DataContract]
     public class ModPayload
     {
-        [DataMember(EmitDefaultValue = false)] public string Name { get; set; }
+        [DataMember(EmitDefaultValue = false)] public string? Name { get; set; }
     }
 }
