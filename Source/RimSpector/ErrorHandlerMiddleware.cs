@@ -1,4 +1,4 @@
-﻿namespace WebApi.Helpers;
+﻿namespace RimSpectorApi;
 
 using System.Net;
 using System.Text.Json;
@@ -24,7 +24,7 @@ public class ErrorHandlerMiddleware
             response.ContentType = "application/json";
 
             switch (error)
-            {                
+            {
                 case KeyNotFoundException e:
                     // not found error
                     response.StatusCode = (int)HttpStatusCode.NotFound;

@@ -63,29 +63,28 @@ namespace RimSpectorMod.Mapper
             payload.Traits = _pawn.story?.traits?.allTraits?.Select(Map).ToList();
 
             payload.Backstories = _pawn.story?.AllBackstories?.Select(b => Map(b)).ToList();
-            //TODO Group missing parts. currently it will list fingers and stuff if an arm is missing
 
-            payload.Health = _pawn.health?.hediffSet?.hediffs?.Select(Map).ToList();
+            payload.Health = VisibleHediffs(_pawn).Select(Map).ToList();
 
+            //new BodyDef().AllParts.Select(p => HealthUtility.GetPartConditionLabel(_pawn, p))
             payload.PsylinkLevel = _pawn.GetPsylinkLevel();
             payload.Psycasts = _pawn.abilities?.abilities?.Select(Map).ToList();
 
             return payload;
         }
 
-        //TODO get incapabilities. Firefight is not a skill so it cant be deducted from the disabled skills
-        // _pawn.GetDisabledWorkTypes()
-
         private SkillPayload Map(SkillRecord skill)
-            => new SkillPayload
-            {
-                Name = skill.def.defName,
-                Disabled = skill.TotallyDisabled,
-                Level = skill.Level,
-                MaxLevel = SkillRecord.MaxLevel,
-                MinLevel = SkillRecord.MinLevel,
-                Passion = Map(skill.passion)
-            };
+        => new SkillPayload
+        {
+            Name = skill.def.defName,
+            Disabled = skill.TotallyDisabled,
+            Level = skill.Level,
+            MaxLevel = SkillRecord.MaxLevel,
+            MinLevel = SkillRecord.MinLevel,
+            Passion = Map(skill.passion)
+        };
+
+
         private IncapabilityPayload Map(WorkTags workType)
             => new IncapabilityPayload
             {
@@ -108,6 +107,23 @@ namespace RimSpectorMod.Mapper
                Name = health?.LabelCap,
                Part = health?.Part?.LabelCap
            };
+        private static IEnumerable<Hediff> VisibleHediffs(Pawn pawn)
+        {
+            List<Hediff_MissingPart> mpca = pawn.health.hediffSet.GetMissingPartsCommonAncestors();
+            int num;
+            for (int i = 0; i < mpca.Count; i = num + 1)
+            {
+                yield return mpca[i];
+                num = i;
+            }
+            IEnumerable<Hediff> enumerable = from d in pawn.health.hediffSet.hediffs
+                                             where !(d is Hediff_MissingPart) && d.Visible && (d.def != HediffDefOf.BloodLoss)
+                                             select d;
+            foreach (Hediff hediff in enumerable)
+            {
+                yield return hediff;
+            }
+        }
 
         private PsycastPayload Map(Ability ability)
           => new PsycastPayload

@@ -57,10 +57,18 @@
   <ItemGroup>
     <Compile Include="Contracts\HistoryPayload.cs" />
     <Compile Include="Contracts\IdeoPayload.cs" />
+    <Compile Include="Contracts\MapsPayload.cs" />
     <Compile Include="Contracts\PawnPayload.cs" />
     <Compile Include="Contracts\Payload.cs" />
+    <Compile Include="Contracts\ModsPayload.cs" />
+    <Compile Include="Contracts\StorytellerPayload.cs" />
+    <Compile Include="Contracts\WorldPayload.cs" />
     <Compile Include="Debug\DebugFileDumper.cs" />
     <Compile Include="Debug\DebugLogger.cs" />
+    <Compile Include="Mapper\MapsMapper.cs" />
+    <Compile Include="Mapper\StorytellerMapper.cs" />
+    <Compile Include="Mapper\ModsMapper.cs" />
+    <Compile Include="Mapper\WorldInfoMapper.cs" />
     <Compile Include="Util\EndpointBuilder.cs" />
     <Compile Include="Mapper\IdeologyMapper.cs" />
     <Compile Include="Mapper\PawnMapper.cs" />

@@ -2,6 +2,7 @@
 using RimMod;
 using RimSpectorMod.Mapper;
 using RimWorld;
+using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +29,10 @@ namespace RimSpectorMod
                 .Select(p => p.Key)
                 .ToList();
 
-            //TODO Add some metadata
-            //World seed & settings + colony coordinates
-            //Current.Game.storyteller difficulty, settings & name
-            //ModLister.AllInstalledMods.Where(m => m.Active).Select(m => m.Name);
+            var worldInfo = Find.World?.info;
+            var storyteller = Find.Storyteller;
+            var mods = ModLister.AllInstalledMods;
+            var maps = new List<Map>(Find.Maps);
 
             var payload = new Payload();
             payload.Timestamp = DateTime.UtcNow;
@@ -41,8 +42,13 @@ namespace RimSpectorMod
             {
                 payload.Pawns = PawnMapper.Map(pawns).ToList();
                 payload.Ideos = IdeologyMapper.Map(ideos).ToList();
-                //payload.History = GetHistoryPayload();
+                payload.World = WorldInfoMapper.Map(worldInfo);
+                payload.Storyteller = StorytellerMapper.Map(storyteller);
+                payload.Maps = MapsMapper.Map(maps);
             }
+
+            payload.Mods = ModsMapper.Map(mods);
+
             return payload;
         }
 
@@ -51,7 +57,7 @@ namespace RimSpectorMod
             IEnumerable<Pawn> pawns;
             try
             {
-                pawns = PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_Colonists;
+                pawns = new List<Pawn>(PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_Colonists);
             }
             catch (Exception ex)
             {

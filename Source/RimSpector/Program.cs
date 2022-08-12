@@ -4,7 +4,6 @@ using NeoSmart.Caching.Sqlite;
 using RimSpectorApi;
 using RimSpectorApi.Attributes;
 using System.Net;
-using WebApi.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
