@@ -17,9 +17,40 @@
          <div> <!--World-->
             <h2>World</h2>            
             <div>Seed: @Model.World?.Seed</div>    
-            <div>Coverage: @Model.GetPercent(Model.World?.Coverage)</div>    
-            <div>Rainfall: @Model.World?.Rainfall</div>    
-            <div>Population: @Model.World?.Population</div>     
+            <div>Coverage: @Model.GetPercent(Model.World?.Coverage)</div>     
+            <div class="sliderproperty">
+                <div>Rainfall:</div>
+                <div class="slidecontainer">
+                    <div style="display:flex justify-content: space-bewteen;">
+                        <a>Low</a>
+                        <a>Normal</a>
+                        <a>High</a>
+                    </div>
+                  <input type="range" min="0" max="6" value="@Model.World?.Rainfall" class="slider" disabled>
+                </div>
+            </div>
+            <div class="sliderproperty">
+                <div>Temperature:</div>
+                <div class="slidecontainer">
+                    <div style="display:flex justify-content: space-bewteen;">
+                        <a>Low</a>
+                        <a>Normal</a>
+                        <a>High</a>
+                    </div>
+                  <input type="range" min="0" max="6" value="@Model.World?.Temperature" class="slider" disabled>
+                </div>
+            </div>
+            <div class="sliderproperty">
+                <div>Population:</div>
+                <div class="slidecontainer">
+                    <div style="display:flex justify-content: space-bewteen;">
+                        <a>Sparse</a>
+                        <a>Normal</a>
+                        <a>Crowded</a>
+                    </div>
+                  <input type="range" min="0" max="6" value="@Model.World?.Population" class="slider" disabled>
+                </div>
+            </div>
         </div>
         <hr />
         <div> <!--Storyteller-->

@@ -37,11 +37,10 @@ namespace RimSpectorApi.Pages
 
             _service.TryGetMods(clientId, out var mods);
             Mods = mods;
-
         }
 
         public string GetPercent(float? value) => value.HasValue ? GetPercent(value.Value) : "-";
-        public string GetPercent(float value) => $"{value * 100}%";
+        public string GetPercent(float value) => value.ToString("P0");
         public string GetEnabledLabel(bool? value) => value.HasValue ? GetEnabledLabel(value.Value) : "-";
         public string GetEnabledLabel(bool value) => value ?"enabled" : "disabled";
     }
