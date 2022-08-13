@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9266a199-13f7-41d1-b806-60f1f57766cd</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/05ffc4c6-982b-4637-a2c5-6b45d778ccc4/resourceGroups/default/providers/microsoft.insights/components/rimspector</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,11 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="App.Metrics.Abstractions" Version="4.3.0" />
-    <PackageReference Include="App.Metrics.AspNetCore" Version="4.3.0" />
-    <PackageReference Include="App.Metrics.AspNetCore.Endpoints" Version="4.3.0" />
-    <PackageReference Include="App.Metrics.Prometheus" Version="4.3.0" />
-    <PackageReference Include="AutoFixture" Version="4.17.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="6.0.8" />
     <PackageReference Include="NeoSmart.Caching.Sqlite" Version="6.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />

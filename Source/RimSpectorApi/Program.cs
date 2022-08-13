@@ -4,7 +4,6 @@ using NeoSmart.Caching.Sqlite;
 using RimSpectorApi;
 using RimSpectorApi.Attributes;
 using System.Net;
-using App.Metrics.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +18,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
 builder.Services.AddHealthChecks();
-builder.Services.AddMetricsEndpoints();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -33,12 +31,9 @@ builder.Services.AddSingleton<Cache>();
 builder.Services.AddTransient<Service>();
 builder.Services.AddTransient<ClientKeyFilter>();
 
-builder.Host.UseMetrics();
-builder.Host.ConfigureAppMetricsHostingConfiguration(o =>
+builder.Services.AddApplicationInsightsTelemetry(o =>
 {
-    o.EnvironmentInfoEndpoint = "/monitoring/env";
-    o.MetricsEndpoint = "/monitoring/metrics";
-    o.MetricsTextEndpoint = "/monitoring/metrics-text";
+    o.ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
 });
 
 var app = builder.Build();
@@ -70,7 +65,5 @@ app.MapControllers();
 app.UseStatusCodePages();
 
 app.MapHealthChecks("/monitoring/health");
-
-app.UseMetricsAllEndpoints();
 
 app.Run();
