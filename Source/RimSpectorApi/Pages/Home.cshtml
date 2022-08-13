@@ -1,0 +1,42 @@
+﻿@page "/"
+@model RimSpectorApi.Pages.HomeModel
+
+<div class="text-center home">
+    <div class="sideNav"> 
+       
+    </div>
+    <div class="content "> 
+        <h1> Welcome to RimSpector</h1>
+        <a>
+            Current RimSpecting @Model.CachedPayloadCount game(s).
+        </a>
+        @if (@Model.SomePayloadId.HasValue)
+        {    
+            <a href="/@Model.SomePayloadId">Show me a colony</a>
+        }
+
+        <div>
+            RimSpector is a RimWorld mod / website combo that allows you to easily share the state of your game with others, 
+            all without any account and login shenanigans. 
+        </div>
+        <div>
+            How it works: All you have to do is install the <a href="modlink">mod</a> and run a game of RimWorld. 
+            The mod will regularly gather you games data and send it here, where it is stored for a short while.
+            When you quit your game, your data will eventually expire and thus not be available any more. 
+        </div>
+        <div>
+            Once you installed the mod, you will find the link to your data in the Mod Settings.
+        </div>
+        <div>
+            Should you have any questions, ideas or problems, leave a message either on the <a href="modlink">Steam mod page</a>
+            or the <a href="https://github.com/Alrikozord/RimSpector"><img src="/images/GitHub-Mark-Light-32px.png" height="16" /><img src="/images/GitHub_Logo_White.png"  height="24" /></a> 
+            
+        </div>
+        <h2>Todos & Upcoming Features</h2>
+        <div>
+            <ul class="todo">
+                <li>Icons</li>
+            </ul>
+        </div>
+       </div>
+</div>

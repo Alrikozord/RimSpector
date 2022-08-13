@@ -1,0 +1,13 @@
+﻿@page "/errors/{code:int}"
+@model RimSpectorApi.Pages.Errors.ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="text-center" style="height:80vh">
+    <h1 class="text-danger">Error</h1>
+    <h2 class="text-danger">An error occurred while processing your request.</h2>
+    <div >
+        <img  src="/images/500_downed.png"/>
+    </div>  
+</div>

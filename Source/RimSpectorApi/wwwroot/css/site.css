@@ -1,0 +1,33 @@
+html {
+    font-size: 14px;
+    background-color: #15191d;
+    color:#dbdcdc ;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #15191d;
+    color: #dbdcdc;
+    font-family: Arial;
+}
+
+footer{    
+    text-align:center;
+    font-size:x-small;
+}
+
+    footer div {
+        margin: auto;
+        width: 50%;
+    }

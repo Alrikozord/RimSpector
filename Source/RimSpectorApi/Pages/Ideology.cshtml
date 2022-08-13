@@ -1,0 +1,150 @@
+﻿@page "/{clientId:guid}/Ideos/{ideoId?}"
+@using RimSpectorApi.Contracts;
+@model RimSpectorApi.Pages.IdeologyModel
+@{
+    ViewData["Title"] = "Ideologies";
+}
+
+@await Html.PartialAsync("_Nav", Model.ClientId)
+<div class="text-center">
+    <div class="sideNav"> 
+        <ul> <!--Ideo Navigation-->
+            @foreach (var ideo in Model.GetIdeos())
+            {
+                <li class="@(Model.SelectedIdeoId == ideo.Id? "selected":"")" href="/@Model.ClientId/Ideos/@ideo.Id">
+
+                    <a href="/@Model.ClientId/Ideos/@ideo.Id">@ideo.Name</a>
+
+                </li>
+            }
+
+        </ul>
+    </div>
+    <div class="content"> <!--Pawn Content-->
+        @if (Model.SelectedIdeoId != -1)
+        {
+            <!--Basics-->
+            <h1>@Model.SelectedIdeo.Name</h1> 
+            @if (Model.SelectedIdeo.IsFluid ?? false)
+            {
+                <div>@Model.SelectedIdeo.CurrentReformPoints / @Model.SelectedIdeo.NextReform</div>
+            }
+            else
+            {
+                <div>non Fluid</div>                
+            }
+
+            <h2>Memes</h2>
+            <div class="memes">
+                @foreach (var meme in Model.SelectedIdeo.Memes)
+                {
+                    <div class="meme">
+                        @meme
+                    </div>
+                }
+            </div>
+
+            <h2>Precepts</h2>
+            <div class="precepts high">
+                @foreach (var precept in Model.PreceptsHighImpact)
+                {
+                    <div class="precept">
+                        <div>@precept.Name</div>
+                        <div class="value">@precept.Detail</div>
+                    </div>
+                }
+            </div>
+
+             <div class="precepts medium">
+                @foreach (var precept in Model.PreceptsMediumImpact)
+                {
+                    <div class="precept">
+                        <div>@precept.Name</div>
+                        <div class="value">@precept.Detail</div>
+                    </div>
+                }
+            </div>
+
+             <div class="precepts low">
+                @foreach (var precept in Model.PreceptsLowImpact)
+                {
+                    <div class="precept">
+                        <div>@precept.Name</div>
+                        <div class="value">@precept.Detail</div>
+                    </div>
+                }
+            </div>
+
+            <h2>Roles</h2>
+             <div class="precepts roles">
+                @foreach (var role in Model.SelectedIdeo.Roles)
+                {
+                    <div class="precept">
+                        <div>@role.Role</div>
+                        <div class="value">@role.Name</div>
+                    </div>
+                }
+            </div>
+
+            <h2>Rituals</h2>
+             <div class="precepts rituals">
+                @foreach (var ritual in Model.SelectedIdeo.Rituals)
+                {
+                    <div class="precept">
+                        <div>
+                            <div>@ritual.Type </div>
+                            <div class="value">@ritual.Name</div>
+                            @if (!ritual.IsAnytime)
+                            {
+                                <div>@ritual.DateTrigger</div>
+                            }
+                        </div>
+                        <div class="ritualSymbol">     
+                            <div>@Model.GetRitualSymbol(ritual)</div>      
+                        </div>   
+                    </div>
+                }
+            </div>
+
+            <h2>Relics</h2>
+            <div class="precepts relics">
+                @foreach (var relic in Model.SelectedIdeo.Relics)
+                {
+                    <div class="precept">
+                        <div>
+                            <div>@relic.Item </div>
+                            <div class="value">@relic.Name</div>
+                        </div> 
+                    </div>
+                }
+            </div>
+
+            <h2>Weapons</h2>
+            <div class="precepts weapons">
+                @foreach (var weapon in Model.SelectedIdeo.Weapons)
+                {
+                    <div class="precept">
+                        <div>
+                            <div class="value">@weapon.Bonus </div>
+                            <div class="value">@weapon.Malus</div>
+                        </div> 
+                    </div>
+                }
+            </div>
+            
+            <h2>Animals</h2>
+            <div class="precepts animals">
+                @foreach (var animal in Model.SelectedIdeo.Animals)
+                {
+                    <div class="precept">
+                        <div>
+                            <div>Venerated</div>
+                            <div class="value">@animal.Name</div>
+                        </div> 
+                    </div>
+                }
+            </div>
+
+        }
+    </div>
+</div>

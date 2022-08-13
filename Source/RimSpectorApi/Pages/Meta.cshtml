@@ -1,0 +1,51 @@
+﻿@page "/{clientId:guid}/Meta/"
+@using RimSpectorApi.Contracts;
+@model RimSpectorApi.Pages.MetaModel
+@{
+    ViewData["Title"] = "Metadata";
+}
+
+@await Html.PartialAsync("_Nav", Model.ClientId)
+<div class="text-center">
+    <div class="sideNav"> 
+        <ul>         
+
+        </ul>
+    </div>
+    <div class="content">
+
+         <div> <!--World-->
+            <h2>World</h2>            
+            <div>Seed: @Model.World?.Seed</div>    
+            <div>Coverage: @Model.GetPercent(Model.World?.Coverage)</div>    
+            <div>Rainfall: @Model.World?.Rainfall</div>    
+            <div>Population: @Model.World?.Population</div>     
+        </div>
+        <hr />
+        <div> <!--Storyteller-->
+            <h2>Storyteller</h2>            
+            <h3>@Model.Storyteller?.Name</h3>    
+            <div>Thread Scale: @Model.GetPercent(Model.Storyteller?.ThreadScale)</div>    
+            <div>Natural Hives: @Model.GetEnabledLabel(Model.Storyteller?.MapGeneratesHives)</div>    
+            <div>Insect Spawing Rate: @Model.GetPercent(Model.Storyteller?.InsectSpawingRate)</div>     
+            <div>Deep Drilling Infestations: @Model.GetPercent(Model.Storyteller?.DeepDrillingInfestations)</div>    
+        </div>
+        <hr />
+
+         <div> <!--Maps-->
+            <h2>Maps</h2> 
+            @foreach (var map in Model.Maps)
+            {
+                <div>@map.Name @@ @map.Coordinates</div>
+            }
+        </div>
+        <hr />
+         <div> <!--Mods-->
+            <h2>Active Mods</h2> 
+            @foreach (var mod in Model.Mods)
+            {
+                <div>@mod.Name</div>
+            }
+        </div>
+    </div>
+</div>

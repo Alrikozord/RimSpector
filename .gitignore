@@ -147,7 +147,7 @@ csx/
 # Visual Studio cache/options directory
 .vs/
 
-wwwroot/
+# wwwroot/
 
 # Windows Store app package directory
 AppPackages/

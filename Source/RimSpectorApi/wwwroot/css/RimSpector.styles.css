@@ -1,0 +1,223 @@
+﻿.topNav {
+    text-align: center;
+}
+
+    .topNav ul > li {
+        display: inline-block;
+    }
+
+.nav-link {
+    color: inherit;
+    border-style: outset;
+    border-color: #3d444e;
+    background: #182228;
+}
+
+    .nav-link:hover {
+        color: inherit;
+    }
+
+a:hover {
+    color: inherit;
+}
+
+.sideNav {
+    text-align: center;
+    width: 20%;
+    display: inline-block;
+}
+
+    .sideNav ul {
+        list-style-type: none;
+        margin-right: 15px;
+    }
+
+        .sideNav ul .selected {
+            font-weight: bold;
+            border-style: inset;
+            border-color: #7d6133;
+            background: #624927;
+        }
+
+    .sideNav li {
+        margin-bottom: 2px;
+        border-style: outset;
+        border-color: #7d6133;
+        background: #6a512e;
+    }
+
+    .sideNav selected li {
+    }
+
+    .sideNav li a {
+        margin: 0px;
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+    }
+
+a {
+    color: inherit;
+}
+
+h2 {
+    font-size: x-large;
+    margin-top: 5px
+}
+
+h3 {
+    font-size: large;
+    font-weight: bold;
+    margin-top: 5px
+}
+main {
+    min-height: 90vh;
+}
+
+.todo {
+    display: inline-block;
+    text-align: left;
+    max-width: 300px;
+}
+
+.home div {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.content {
+    width: 70%;
+    text-align: left;
+    vertical-align: top;
+    display: inline-block;
+}
+
+    .content * {
+        vertical-align: top;
+    }
+
+.backstoryList > a:not(:first-child):before {
+    content: ", ";
+}
+
+.skillCol {
+    display: inline-block;
+    width: 49%;
+}
+
+.incapables > div {
+    background-color: #2d3034;
+    display: inline-block;
+    padding: 2px 5px 2px 5px;
+    margin-bottom: 5px;
+}
+
+.traits > div {
+    background-color: #2d3034;
+    display: inline-block;
+    padding: 2px 5px 2px 5px;
+    margin-bottom: 5px;
+}
+
+.psycasts > div {
+    background-color: #2d3034;
+    display: inline-block;
+    padding: 2px 5px 2px 5px;
+    margin-bottom: 5px;
+}
+
+.health > div:nth-of-type(odd) {
+    background: #262a30;
+}
+
+.healthCol {
+    display: inline-block;
+    width: 49%;
+}
+
+.skill {
+}
+
+.skillLabel {
+    display: inline-block;
+    min-width: 40%;
+    min-width: 130px;
+}
+
+.skill .name {
+    display: inline-grid;
+}
+
+.skill .passion {
+    padding-right: 2px;
+    letter-spacing: -8px;
+    display: inline-block;
+    width: fit-content;
+    float: right;
+}
+
+.skill .skillLevel {
+    display: inline-block;
+    width: 50px;
+    min-width: 49%;
+    position: relative;
+}
+
+.memes {
+    text-align: -webkit-center;
+}
+
+.meme {
+    display: inline-block;
+    width: 24%;
+    text-align: center;
+    border: solid;
+    border-width: 1px;
+    background: #1e2226;
+    border-color: #2e2e2e;
+}
+
+.precept {
+    padding: 2px;
+    font-size: small;
+    width: 30%;
+    margin: 5px 3px 0px 0px;
+    border: solid;
+    border-width: 1px;
+    display: inline-block;
+    background: #2e2e2e;
+    border-color: #2e2e2e;
+    color: #b3b3b3;
+}
+
+    .precept .value {
+        color: #e6e6e6;
+    }
+
+.high .precept {
+    background: #3d3d3d;
+    border-color: #2e2e2e;
+}
+
+    .high .precept .value {
+        color: #e6e673;
+    }
+
+.low .precept {
+    background: #212121;
+    border-color: #2e2e2e;
+}
+
+    .low .precept .value {
+        color: #b3b3b3;
+    }
+
+.rituals .precept > div {
+    display: inline-block;
+}
+
+.rituals .precept .ritualSymbol {
+    font-size: large;
+    float: right;
+}
