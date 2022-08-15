@@ -1,10 +1,4 @@
-﻿using Contracts;
-using RimSpectorMod;
-using System;
-using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using RimSpectorMod;
 using UnityEngine;
 using Verse;
 
@@ -28,8 +22,8 @@ namespace RimMod
             _endpointBuilder = new EndpointBuilder(Settings);
 
             _debugLogger.Log("[RimSpector]: running in debug mode.");
-            _debugLogger.Log($"[RimSpector]: debug dump will be written to {Settings._debugDumpFolder}");         
-        }       
+            _debugLogger.Log($"[RimSpector]: debug dump will be written to {Settings._debugDumpFolder}");
+        }
 
         /// <summary>
         /// Override SettingsCategory to show up in the list of settings.

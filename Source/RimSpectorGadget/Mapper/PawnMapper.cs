@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RimSpectorMod.Mapper
 {

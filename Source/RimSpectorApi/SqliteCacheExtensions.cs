@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Options;
 using NeoSmart.Caching.Sqlite;
 
 namespace RimSpectorApi

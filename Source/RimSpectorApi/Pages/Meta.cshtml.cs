@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using RimSpectorApi.Contracts;
 
 namespace RimSpectorApi.Pages
@@ -42,6 +41,6 @@ namespace RimSpectorApi.Pages
         public string GetPercent(float? value) => value.HasValue ? GetPercent(value.Value) : "-";
         public string GetPercent(float value) => value.ToString("P0");
         public string GetEnabledLabel(bool? value) => value.HasValue ? GetEnabledLabel(value.Value) : "-";
-        public string GetEnabledLabel(bool value) => value ?"enabled" : "disabled";
+        public string GetEnabledLabel(bool value) => value ? "enabled" : "disabled";
     }
 }

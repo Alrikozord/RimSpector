@@ -1,12 +1,8 @@
 ﻿
 using Contracts;
 using RimWorld.Planet;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 using Verse;
 
 namespace RimSpectorMod.Mapper
@@ -24,8 +20,8 @@ namespace RimSpectorMod.Mapper
 
             payload.Name = mapData.Name;
 
-            var coords = Find.WorldGrid.LongLatOf(mapData.Tile);            
-            payload.Coordinates = $"{coords.x.ToStringLongitude()} {coords.y.ToStringLatitude()}";             
+            var coords = Find.WorldGrid.LongLatOf(mapData.Tile);
+            payload.Coordinates = $"{coords.x.ToStringLongitude()} {coords.y.ToStringLatitude()}";
 
 
             return payload;

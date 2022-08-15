@@ -3,7 +3,6 @@ using Microsoft.Extensions.Caching.Memory;
 using NeoSmart.Caching.Sqlite;
 using RimSpectorApi;
 using RimSpectorApi.Attributes;
-using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RimSpectorApi.Contracts;
+﻿using RimSpectorApi.Contracts;
 
 namespace RimSpectorApi
 {

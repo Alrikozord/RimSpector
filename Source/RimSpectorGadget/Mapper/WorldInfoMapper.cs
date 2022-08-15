@@ -1,11 +1,6 @@
 ﻿
 using Contracts;
 using RimWorld.Planet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RimSpectorMod.Mapper
 {
@@ -20,7 +15,7 @@ namespace RimSpectorMod.Mapper
             payload.Rainfall = (int)worldInfo.overallRainfall;
             payload.Temperature = (int)worldInfo.overallTemperature;
             payload.Population = (int)worldInfo.overallPopulation;
-            
+
             return payload;
         }
     }

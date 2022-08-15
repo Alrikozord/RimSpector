@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using RimSpectorApi.Contracts;
 
 namespace RimSpectorApi.Pages
@@ -48,17 +47,17 @@ namespace RimSpectorApi.Pages
 
                 return $"background: linear-gradient(90deg, #2d3034 {skillPercent}%, #15191d 0)";
             }
-            return string.Empty;       
+            return string.Empty;
         }
 
         public string SkillValueText(SkillPayload skill)
         {
-            if (skill.Level.HasValue)            
+            if (skill.Level.HasValue)
                 return skill.Level?.ToString() ?? "0";
-            
-            else if(skill.Disabled ?? false)            
+
+            else if (skill.Disabled ?? false)
                 return "-";
-            
+
             return "0";
         }
 
@@ -85,7 +84,7 @@ namespace RimSpectorApi.Pages
                 SelectedPawnId = pawnId!;
             }
 
-            if (!string.IsNullOrWhiteSpace( SelectedPawnId))
+            if (!string.IsNullOrWhiteSpace(SelectedPawnId))
             {
                 SelectedPawn = _service.GetPawn(ClientId, SelectedPawnId);
             }

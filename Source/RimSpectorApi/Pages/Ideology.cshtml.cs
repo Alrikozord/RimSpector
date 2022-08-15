@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using RimSpectorApi.Contracts;
 
 namespace RimSpectorApi.Pages
@@ -27,7 +26,7 @@ namespace RimSpectorApi.Pages
             ClientId = clientId;
             if (ideoId.HasValue)
             {
-                    SelectedIdeoId = ideoId.Value;
+                SelectedIdeoId = ideoId.Value;
             }
             else
             {

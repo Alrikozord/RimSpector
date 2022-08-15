@@ -1,7 +1,6 @@
 ﻿namespace RimSpectorApi;
 
 using System.Net;
-using System.Text.Json;
 
 public class ErrorHandlerMiddleware
 {
@@ -31,7 +30,7 @@ public class ErrorHandlerMiddleware
                     response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     response.Redirect("/errors/500");
                     break;
-            }           
-        }        
+            }
+        }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace RimSpectorApi.Contracts
+﻿namespace RimSpectorApi.Contracts
 {
     public class Payload
     {
