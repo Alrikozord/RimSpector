@@ -86,6 +86,13 @@ main {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+.home h1 {
+    font-family: 'RimWordFont'
+}
+.home h2 {
+    font-family: 'RimWordFont'
+}
+
 
 .content {
     width: 70%;

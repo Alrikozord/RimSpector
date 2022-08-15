@@ -1,5 +1,6 @@
 @font-face {
     font-family: 'RimWordFont';
+    /* Credits for the awesome font to this guy https://ludeon.com/forums/index.php?topic=11022.0 */
     src: url('/RimWordFont.ttf') format('truetype');
 }
 

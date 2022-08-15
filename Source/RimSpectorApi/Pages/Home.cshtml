@@ -3,37 +3,40 @@
 
 <div class="text-center home">
     <div class="content "> 
-        <h1 style="font-family:'RimWordFont'">Welcome to RimSpector</h1>
+        <h1>Welcome to RimSpector</h1>
         <a style="font-family:'RimWordFont'">
             Current RimSpecting @Model.CachedPayloadCount game(s).
         </a>
-        @if (@Model.SomePayloadId.HasValue)
+        @if (@Model.SomePayloadId.HasValue && Model.CachedPayloadCount > 0)
         {    
             <a href="/@Model.SomePayloadId">Show me a colony</a>
         }
 
         <div>
-            RimSpector is a RimWorld mod that allows you to easily share information about your game with others; 
-            all without any account and login shenanigans. 
+            RimSpector is a <a href="https://rimworldgame.com">RimWorld</a> mod that allows you to easily share information about your game with others; 
+            all without any account or login shenanigans. 
         </div>
+
+        <h2>How it works</h2>
         <div>
-            How it works: All you have to do is install the <a href="modlink">mod</a> and run a game of RimWorld. 
+            All you have to do is install the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2849383209">mod</a> and run a game of RimWorld. <br />
             The mod will regularly gather your games data and send it here, where it is stored for a short while.
+            While playing you can share your Pawns stats, your Ideology and a bunch of metadata like worldseed, storyteller, 
+            difficulty and more with everyone via a link to this website.
             When you quit your game, your data will eventually expire and thus not be available anymore. 
         </div>
         <div>
-            Once you installed the mod, you will find the link to your data in the Mod Settings. This link will always be 
-            the same for you, 
-            so it can be bookmarked for easier access.
+            You will find a link to your games data in the Mod Settings of RimSpector (see below). This link is persistent for your installation, 
+            meaning it will not change and thus can be bookmarked for easier access.
             <img src="/images/settings.png" width=100%/>
         </div>
         <div>
-            Should you have any questions, ideas or problems, leave a message either on the <a href="modlink">Steam mod page</a>
+            Should you have any questions, ideas or problems, leave a message either on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2849383209">Steam Workshop page</a>
             or the <a href="https://github.com/Alrikozord/RimSpector"><img src="/images/GitHub-Mark-Light-32px.png" height="16" /><img src="/images/GitHub_Logo_White.png"  height="24" /></a>             
         </div>
-        <h2>Todos & Upcoming Features</h2>
+        <h2>Upcoming Features and Ideas</h2>
         <div>
-            <ul class="todos & ideas">
+            <ul class="todos">
                 <li>Add Icons for ideology precepts and abilities</li>
                 <li>More tooltip details</li>
                 <li>I'd love a Twitch extension with the data. If anyone wants to give that a shot drop me a note, I'll support in any way I can as long as I don't have to touch JavaScript</li>
