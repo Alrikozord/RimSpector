@@ -35,7 +35,10 @@ namespace RimSpectorMod.Mapper
                 AgeBiologicalYears = _pawn.ageTracker?.AgeBiologicalYears ?? 0,
                 AgeChronologicalYears = _pawn.ageTracker?.AgeChronologicalYears ?? 0
             };
-            payload.Title = _pawn.GetCurrentTitleIn(Faction.OfEmpire)?.GetLabelCapFor(_pawn);
+            if (!(Faction.OfEmpire is null))
+            {
+                payload.Title = _pawn.GetCurrentTitleIn(Faction.OfEmpire)?.GetLabelCapFor(_pawn);
+            }
             payload.Role = IdeologyMapper.Map(_pawn.ideo?.Ideo?.GetRole(_pawn));
 
             payload.Ideo = _pawn.Ideo.id;
@@ -66,7 +69,6 @@ namespace RimSpectorMod.Mapper
 
             payload.Health = VisibleHediffs(_pawn).Select(Map).ToList();
 
-            //new BodyDef().AllParts.Select(p => HealthUtility.GetPartConditionLabel(_pawn, p))
             payload.PsylinkLevel = _pawn.GetPsylinkLevel();
             payload.Psycasts = _pawn.abilities?.abilities?.Select(Map).ToList();
 

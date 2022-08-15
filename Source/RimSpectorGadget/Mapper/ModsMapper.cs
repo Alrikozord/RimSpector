@@ -20,7 +20,7 @@ namespace RimSpectorMod.Mapper
         {
             var payload = new ModPayload();
 
-            payload.Name =modData.Name;
+            payload.Name = modData.Name;
 
             return payload;
         }

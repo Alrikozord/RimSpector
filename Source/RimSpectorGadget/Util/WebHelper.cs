@@ -1,9 +1,11 @@
 ﻿using Contracts;
 using RimMod;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Threading;
 using UnityEngine.Networking;
+using Verse;
 
 namespace RimSpectorMod
 {
@@ -28,33 +30,40 @@ namespace RimSpectorMod
 
         public long Post(Payload payload)
         {
-            using (var stream = new MemoryStream())
-            using (var request = new UnityWebRequest(_endpointBuilder.ConfiguredApiEndpoint, "POST"))
+            try
             {
-                _serializer.WriteObject(stream, payload);
-                                
-                request.SetRequestHeader("Content-Type", "application/json");
-                request.SetRequestHeader("CLIENT-KEY", _settings._privateKey);
-                request.downloadHandler = new DownloadHandlerBuffer();
-                request.uploadHandler = new UploadHandlerRaw(stream.ToArray());
-                request.timeout = 5; // seconds
-
-                _debugLogger.Log($"RimSpector: trying post");
-                request.SendWebRequest();
-
-                while (!request.isDone)
+                using (var stream = new MemoryStream())
+                using (var request = new UnityWebRequest(_endpointBuilder.ConfiguredApiEndpoint, "POST"))
                 {
-                    Thread.Sleep(1000);
-                    _debugLogger.Log($"RimSpector: waiting ...");
+                    _serializer.WriteObject(stream, payload);
+
+                    request.SetRequestHeader("Content-Type", "application/json");
+                    request.SetRequestHeader("CLIENT-KEY", _settings._privateKey);
+                    request.downloadHandler = new DownloadHandlerBuffer();
+                    request.uploadHandler = new UploadHandlerRaw(stream.ToArray());
+                    request.timeout = 20; // seconds
+
+                    _debugLogger.Log($"[RimSpector]: trying post");
+                    request.SendWebRequest();
+
+                    while (!request.isDone)
+                    {
+                        Thread.Sleep(20);
+                    }
+
+                    _debugLogger.Log($"[RimSpector]: POSTed; StatusCode {request.responseCode}; {(request.isNetworkError ? "NetworkError; " : string.Empty)}uploadedBytes {request.uploadedBytes}");
+
+                    return request.responseCode;
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error caught while posting payload.");
+                Log.Error(ex.Message);
+                Log.Error(ex.StackTrace);
+                Log.Error(ex.InnerException.Message);
 
-                _debugLogger.Log($"RimSpector: posted.");
-                _debugLogger.Log($"RimSpector: StatusCode {request.responseCode}");
-                _debugLogger.Log($"RimSpector: isNetworkError {request.isNetworkError}");
-                _debugLogger.Log($"RimSpector: isHttpError {request.isHttpError}");
-                _debugLogger.Log($"RimSpector: uploadedBytes {request.uploadedBytes}");
-
-                return request.responseCode;
+                return -1;
             }
         }
     }

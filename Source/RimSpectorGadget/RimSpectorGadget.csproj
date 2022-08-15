@@ -64,10 +64,14 @@
     <Compile Include="Contracts\WorldPayload.cs" />
     <Compile Include="Debug\DebugFileDumper.cs" />
     <Compile Include="Debug\DebugLogger.cs" />
+    <Compile Include="EventlessTimer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Mapper\MapsMapper.cs" />
     <Compile Include="Mapper\StorytellerMapper.cs" />
     <Compile Include="Mapper\ModsMapper.cs" />
     <Compile Include="Mapper\WorldInfoMapper.cs" />
+    <Compile Include="RimSpectorComponent.cs" />
     <Compile Include="Util\EndpointBuilder.cs" />
     <Compile Include="Mapper\IdeologyMapper.cs" />
     <Compile Include="Mapper\PawnMapper.cs" />

@@ -2,16 +2,13 @@
 <ModMetaData>
     <name>RimSpector</name>
     <author>Alrikozord</author>
-    <url>www.anything.com</url>
+    <url>https://rimspector.azurewebsites.net</url>
     <packageId>Alrikozord.RimSpector</packageId>
     <supportedVersions>
         <li>1.3</li>
     </supportedVersions>
 
-    <description>Sample description.
-        
-Which spans multiple lines. Is also includes whitespace, so unless you want ugly indentation on the workshop, you need to have it un-beautified like this.
-    </description>
+    <description>RimSpector allows you to easily share information about your game with others over a website; all without any account and login shenanigans.</description>
 
     <!-- <modDependencies>
     </modDependencies> -->

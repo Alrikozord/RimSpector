@@ -18,11 +18,17 @@ namespace RimSpectorMod.Mapper
             _ideo = ideo;
         }
 
-        public static IEnumerable<IdeoPayload> Map(IEnumerable<Ideo> ideos) => ideos.Select(Map);
+        public static IEnumerable<IdeoPayload> Map(IEnumerable<Ideo> ideos)
+            => ideos
+                .Select(Map)
+                .Where(p => !(p is null));
         public static IdeoPayload Map(Ideo ideo) => new IdeologyMapper(ideo).Map();
 
         public IdeoPayload Map()
         {
+            if (_ideo.createdFromNoExpansionGame)
+                return null;
+
             var payload = new IdeoPayload();
             payload.Id = _ideo.id;
             payload.Name = _ideo.name;

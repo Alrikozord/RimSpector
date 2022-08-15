@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'RimWordFont';
+    src: url('/RimWordFont.ttf') format('truetype');
+}
+
 html {
     font-size: 14px;
     background-color: #15191d;

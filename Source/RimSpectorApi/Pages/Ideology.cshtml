@@ -27,7 +27,7 @@
             <h1>@Model.SelectedIdeo.Name</h1> 
             @if (Model.SelectedIdeo.IsFluid ?? false)
             {
-                <div>@Model.SelectedIdeo.CurrentReformPoints / @Model.SelectedIdeo.NextReform</div>
+                <div>@(Model.SelectedIdeo.CurrentReformPoints ?? 0) / @Model.SelectedIdeo.NextReform</div>
             }
             else
             {
@@ -144,7 +144,10 @@
                     </div>
                 }
             </div>
-
+        }
+        else
+        {
+            <div class="none">none</div>
         }
     </div>
 </div>

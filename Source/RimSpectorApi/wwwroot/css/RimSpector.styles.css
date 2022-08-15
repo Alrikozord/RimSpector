@@ -223,9 +223,13 @@ main {
     float: right;
 }
 
-.sliderproperty div{
-    display:inline-block;
-    margin-right:25px;
+.none {
+    color: #b3b3b3;
+}
+
+.sliderproperty div {
+    display: inline-block;
+    margin-right: 25px;
 }
 
 .slidecontainer {

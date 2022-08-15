@@ -1,7 +1,9 @@
-﻿using RimSpectorMod;
+﻿using Contracts;
+using RimSpectorMod;
 using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using UnityEngine;
 using Verse;
@@ -10,67 +12,24 @@ namespace RimMod
 {
     public class RimSpectorGadget : Mod
     {
-        private BackgroundWorker _worker;
         private DebugLogger _debugLogger;
-        private DebugFileDumper _debugFileDumper;
         private EndpointBuilder _endpointBuilder;
-        private PayloadBuilder _payloadBuilder;
-        private WebHelper _webHelper;
 
-        public Settings Settings { get; }
+        public static Settings Settings { get; private set; }
 
         public RimSpectorGadget(ModContentPack content) : base(content)
         {
-            Log.Message("RimSpector initialized");
+            Log.Message("[RimSpector] initialized");
 
             Settings = GetSettings<Settings>();
             Settings.Write();
 
-            var serializerProvider = new SerializerProvider();
             _debugLogger = new DebugLogger(Settings);
-
-            _debugFileDumper = new DebugFileDumper(Settings, serializerProvider);
             _endpointBuilder = new EndpointBuilder(Settings);
-            _payloadBuilder = new PayloadBuilder(Settings);
-            _webHelper = new WebHelper(Settings, _endpointBuilder, _debugLogger, serializerProvider);
 
-            Log.Message($"RimSpector: your endpoint {_endpointBuilder.ConfiguredApiEndpoint}");
-
-            _debugLogger.Log("RimSpector: running in debug mode.");
-            _debugLogger.Log($"RimSpector: debug dump will be written to {Settings._debugDumpFolder}");
-
-            _worker = new BackgroundWorker();
-            _worker.DoWork += _worker_DoWork;
-            _worker.WorkerReportsProgress = false;
-            _worker.WorkerSupportsCancellation = false;
-            _worker.RunWorkerAsync();
-        }
-
-        private void _worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            _debugLogger.Log($"RimSpector: Starting loop with interval {Settings._updateInterval}");
-
-            while (true)
-            {
-                //TODO Check resilience. There are some null reference exceptions that cause this to break
-                try
-                {
-                    Thread.Sleep(TimeSpan.FromSeconds(Settings._updateInterval));
-
-                    var payload = _payloadBuilder.Build();
-
-                    _webHelper.Post(payload);
-                    _debugFileDumper.DumpIfDebug(payload);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error($"Error caught in {nameof(_worker_DoWork)}");
-                    Log.Error(ex.Message);
-                    Log.Error(ex.StackTrace);
-                    Log.Error(ex.InnerException.Message);
-                }
-            }
-        }
+            _debugLogger.Log("[RimSpector]: running in debug mode.");
+            _debugLogger.Log($"[RimSpector]: debug dump will be written to {Settings._debugDumpFolder}");         
+        }       
 
         /// <summary>
         /// Override SettingsCategory to show up in the list of settings.
@@ -87,7 +46,7 @@ namespace RimMod
         {
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.Begin(inRect);
-            listingStandard.Label($"Your export url is {_endpointBuilder.ConfiguredSiteEndpoint}");
+            listingStandard.Label($"Find your data at {_endpointBuilder.ConfiguredSiteEndpoint}");
             if (listingStandard.ButtonText("Copy to clipboard"))
             {
                 GUIUtility.systemCopyBuffer = _endpointBuilder.ConfiguredSiteEndpoint;

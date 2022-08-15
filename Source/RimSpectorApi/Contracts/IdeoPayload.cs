@@ -9,8 +9,8 @@ namespace RimSpectorApi.Contracts
         [DataMember] public int Id { get; set; }
         [DataMember] public string? Name { get; set; }
         [DataMember] public bool? IsFluid { get; set; }
-        [DataMember] public int? CurrentReformPoints { get; internal set; }
-        [DataMember] public int? NextReform { get; internal set; }
+        [DataMember] public int? CurrentReformPoints { get; set; }
+        [DataMember] public int? NextReform { get; set; }
 
         [DataMember] public IEnumerable<RolePayload> Roles { get; set; } = Enumerable.Empty<RolePayload>();
         [DataMember] public IEnumerable<string> Memes { get; set; } = Enumerable.Empty<string>();
